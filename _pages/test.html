@@ -4,20 +4,31 @@ title: test
 permalink: /test/
 ---
 
-<form class="form" action="https://formspree.io/{{site.email}}" method="POST">
-  <div class="form-item">
-      <label class="contact-label" for="name">Name:</label>
-      <input type="text" placeholder="Your name" id="name" class="contact-input" name="name" tabindex="1" required/>
+
+{% for post in paginator.posts %}
+<article class="main-article">
+  <div class="wrap-content">
+    <header class="header-article">
+      <h2 class="title-article"><a href="{{post.url | prepend: site.baseurl}}">{{post.title}}</a></h2>
+      <div class="post-date"><span>{{post.date | date: '%Y, %b %d'}}&nbsp;&nbsp;&nbsp;&nbsp;</span></div>
+    </header>
+    {% if post.img %}
+       <img class="post-image" src={{ "/assets/img/" | prepend: site.baseurl | append: post.img }} alt="{{post.title}}">
+    {% endif %}
+    <p>{{post.description}} <a class="more" href="{{post.url | prepend: site.baseurl}}">(Read more...)</a></p>
   </div>
-  <div class="form-item">
-      <label class="contact-label" for="email">Email:</label>
-      <input type="email" placeholder="Your email" id="email" class="contact-input" name="_replyto" tabindex="2" required/>
-  </div>
-  <div class="form-item">
-    <label class="contact-label" for="message">Message:</label>
-    <textarea class="contact-textarea" placeholder="Your message" class="contact-input" rows="4" id="message" name="message" tabindex="3" required></textarea>
-  </div>
-  <div class="form-item">
-    <button type="submit" value="Send" class="form-btn">Send</button>
-  </div>
-</form>
+</article>
+{% endfor %}
+
+<div class="pagination">
+  {% if paginator.previous_page %}
+    <a href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}" class="previous"><i class="fa fa-chevron-left" aria-hidden="true"></i> Previous</a>
+  {% else %}
+    <span class="previous"><i class="fa fa-chevron-left" aria-hidden="true"></i> Previous</span>
+  {% endif %}
+  {% if paginator.next_page %}
+    <a href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}" class="next">Next <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
+  {% else %}
+    <span class="next ">Next <i class="fa fa-chevron-right" aria-hidden="true"></i></span>
+  {% endif %}
+</div>
