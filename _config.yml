@@ -34,3 +34,4 @@ exclude:
   - Gemfile
   - Gemfile.lock
 include: [_pages]
+google_analytics_id: UA-114393385-1
